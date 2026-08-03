@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { cn } from "@/lib/utils"
 
 const INTERACTIVE_SELECTOR =
@@ -110,15 +110,20 @@ export function CustomCursor() {
           "absolute left-0 top-0 flex items-center justify-center transition-[width,height,border-color,background-color,opacity] duration-200 ease-out",
           hovering
             ? "h-14 w-14 border-primary/70 bg-primary/10 shadow-[0_0_24px_oklch(0.7_0.14_250/0.35)]"
-            : "h-9 w-9 border-primary/50 bg-transparent",
-          pressed && "scale-90 origin-center"
+            : "h-9 w-9 border-primary/50 bg-transparent"
         )}
-        style={{
-          borderRadius: "9999px",
-          borderWidth: 1.5,
-          transform:
-            "translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%)",
-        }}
+        style={
+          {
+            borderRadius: "9999px",
+            borderWidth: 1.5,
+            // 缩放必须写在 transform 链末尾：独立 scale 属性会连位移一起缩放（CSS
+            // Transforms L2 中独立属性先于 transform 应用），导致按下时圆心向
+            // 左上偏移；链内 scale 只缩放元素自身，圆心保持锁定鼠标位置
+            transform:
+              "translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%) scale(var(--cursor-scale, 1))",
+            "--cursor-scale": pressed ? "0.9" : "1",
+          } as CSSProperties
+        }
       >
         <span
           className={cn(
