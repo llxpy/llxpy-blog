@@ -34,6 +34,12 @@ export interface GitHubRepo {
 
 export const GITHUB_USERNAME = "llxpy"
 
+/**
+ * 本地头像兜底：avatars.githubusercontent.com 在国内网络被 DNS 污染，
+ * 远程头像加载失败时回退到随站点分发的本地文件
+ */
+export const AVATAR_FALLBACK_SRC = `${import.meta.env.BASE_URL}avatar.jpg`
+
 /** 静态兜底用户数据（API 不可用时使用） */
 const FALLBACK_USER: GitHubUser = {
   login: "llxpy",

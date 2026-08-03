@@ -8,6 +8,7 @@ const INTERACTIVE_SELECTOR =
  * 自定义光标：中心小圆点（快跟随）+ 外圈圆环（弹性慢跟随）
  * - 悬停可交互元素：圆环放大并显现光晕
  * - 按下：整体收缩
+ * - 初始隐藏，首次鼠标移动时定位并淡入（避免初始猜测位置与实际鼠标分离）
  * - 仅桌面精指针设备启用；启用后隐藏系统光标
  */
 export function CustomCursor() {
@@ -16,6 +17,8 @@ export function CustomCursor() {
   const [enabled, setEnabled] = useState(false)
   const [hovering, setHovering] = useState(false)
   const [pressed, setPressed] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const visibleRef = useRef(false)
 
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches) return
@@ -32,6 +35,19 @@ export function CustomCursor() {
     const onMove = (e: MouseEvent) => {
       x = e.clientX
       y = e.clientY
+      // 首次移动鼠标时定位并淡入，避免初始位置与实际鼠标分离
+      if (!visibleRef.current) {
+        visibleRef.current = true
+        setVisible(true)
+      }
+    }
+
+    const onLeave = (e: MouseEvent) => {
+      // 鼠标移出浏览器窗口时隐藏，移回后由下一次 mousemove 重新定位
+      if (!e.relatedTarget && visibleRef.current) {
+        visibleRef.current = false
+        setVisible(false)
+      }
     }
 
     const onOver = (e: MouseEvent) => {
@@ -55,6 +71,7 @@ export function CustomCursor() {
     }
 
     window.addEventListener("mousemove", onMove, { passive: true })
+    document.addEventListener("mouseleave", onLeave, { passive: true })
     document.addEventListener("mouseover", onOver, { passive: true })
     window.addEventListener("mousedown", onDown)
     window.addEventListener("mouseup", onUp)
@@ -63,6 +80,7 @@ export function CustomCursor() {
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener("mousemove", onMove)
+      document.removeEventListener("mouseleave", onLeave)
       document.removeEventListener("mouseover", onOver)
       window.removeEventListener("mousedown", onDown)
       window.removeEventListener("mouseup", onUp)
@@ -73,7 +91,13 @@ export function CustomCursor() {
   if (!enabled) return null
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[80]">
+    <div
+      aria-hidden
+      className={cn(
+        "pointer-events-none fixed inset-0 z-[80] transition-opacity duration-300",
+        visible ? "opacity-100" : "opacity-0"
+      )}
+    >
       {/* 外圈圆环 */}
       <div
         ref={ringRef}

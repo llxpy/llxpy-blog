@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { useGitHub } from "@/context/github-context"
+import { AVATAR_FALLBACK_SRC } from "@/lib/github"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -101,6 +102,10 @@ export function HomePage() {
                 src={user?.avatar_url}
                 alt="llxpy"
                 className="rounded-full"
+                onError={(e) => {
+                  const img = e.currentTarget
+                  if (!img.src.endsWith("avatar.jpg")) img.src = AVATAR_FALLBACK_SRC
+                }}
               />
               <AvatarFallback className="rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-3xl font-bold text-black">
                 L
