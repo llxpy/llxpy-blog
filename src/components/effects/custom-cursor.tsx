@@ -61,11 +61,16 @@ export function CustomCursor() {
     const tick = () => {
       ringX += (x - ringX) * 0.16
       ringY += (y - ringY) * 0.16
+      // 只更新 CSS 变量，transform 由浏览器实时计算：
+      // translate(-50%) 的百分比始终基于元素当前尺寸（含过渡中间态），
+      // 避免 rAF 丢帧时 transform 快照与尺寸过渡不同步导致圆心偏移
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+        dotRef.current.style.setProperty("--cursor-x", `${x}px`)
+        dotRef.current.style.setProperty("--cursor-y", `${y}px`)
       }
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`
+        ringRef.current.style.setProperty("--cursor-x", `${ringX}px`)
+        ringRef.current.style.setProperty("--cursor-y", `${ringY}px`)
       }
       raf = requestAnimationFrame(tick)
     }
@@ -106,9 +111,14 @@ export function CustomCursor() {
           hovering
             ? "h-14 w-14 border-primary/70 bg-primary/10 shadow-[0_0_24px_oklch(0.7_0.14_250/0.35)]"
             : "h-9 w-9 border-primary/50 bg-transparent",
-          pressed && "scale-90"
+          pressed && "scale-90 origin-center"
         )}
-        style={{ borderRadius: "9999px", borderWidth: 1.5 }}
+        style={{
+          borderRadius: "9999px",
+          borderWidth: 1.5,
+          transform:
+            "translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%)",
+        }}
       >
         <span
           className={cn(
@@ -124,6 +134,10 @@ export function CustomCursor() {
           "absolute left-0 top-0 h-2 w-2 rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 shadow-[0_0_8px_oklch(0.7_0.14_260/0.8)] transition-opacity duration-200",
           hovering && "opacity-0"
         )}
+        style={{
+          transform:
+            "translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%)",
+        }}
       />
     </div>
   )
