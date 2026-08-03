@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.02 0.005 280);
+  --foreground: oklch(0.96 0.004 280);
+  --card: oklch(0.05 0.006 280);
+  --card-foreground: oklch(0.96 0.004 280);
+  --popover: oklch(0.05 0.006 280);
+  --popover-foreground: oklch(0.96 0.004 280);
+  --primary: oklch(0.85 0.1 250);
+  --primary-foreground: oklch(0.98 0.004 280);
+  --secondary: oklch(0.15 0.01 280);
+  --secondary-foreground: oklch(0.92 0.01 280);
+  --muted: oklch(0.13 0.008 280);
+  --muted-foreground: oklch(0.62 0.012 280);
+  --accent: oklch(0.16 0.02 280);
+  --accent-foreground: oklch(0.95 0.01 280);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0.004 280);
+  --border: oklch(0.2 0.01 280);
+  --input: oklch(0.2 0.01 280);
+  --ring: oklch(0.75 0.12 260);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Noto Sans SC", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        oklch(0.35 0.14 260 / 0.16),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 100% 100%,
+        oklch(0.3 0.12 300 / 0.1),
+        transparent
+      );
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: oklch(0.75 0.12 260 / 0.35);
+    color: oklch(0.98 0.004 280);
+  }
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.25 0.012 280);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.35 0.02 280);
+  }
+}
+
+@layer utilities {
+  /* 自定义光标启用时隐藏系统光标（仅桌面端，由 JS 控制 html 类） */
+  .cursor-none,
+  .cursor-none * {
+    cursor: none !important;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      110deg,
+      oklch(0.85 0.1 250) 0%,
+      oklch(0.7 0.15 290) 50%,
+      oklch(0.65 0.16 330) 100%
+    );
+  }
+  .glass {
+    background: oklch(0.1 0.008 280 / 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      oklch(0.7 0.14 250 / 0.45),
+      oklch(0.65 0.15 290 / 0.15),
+      oklch(0.6 0.16 330 / 0.4)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .bg-grid {
+    background-image: linear-gradient(
+        oklch(1 0 0 / 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, oklch(1 0 0 / 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  .animate-marquee {
+    animation: marquee 32s linear infinite;
+  }
+  .animate-float {
+    animation: float 7s ease-in-out infinite;
+  }
+  .animate-pulse-slow {
+    animation: pulseSlow 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes mouseWheel {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(3px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1.1s step-end infinite;
+}
