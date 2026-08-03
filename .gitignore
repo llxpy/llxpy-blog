@@ -28,3 +28,6 @@ npm-debug.log*
 
 # misc
 *.local
+
+# typescript incremental
+*.tsbuildinfo
