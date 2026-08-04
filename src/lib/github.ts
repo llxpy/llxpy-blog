@@ -49,7 +49,7 @@ const FALLBACK_USER: GitHubUser = {
   bio: null,
   location: null,
   blog: "",
-  public_repos: 8,
+  public_repos: 9,
   followers: 1,
   following: 2,
   created_at: "2023-08-21T12:06:41Z",
@@ -206,6 +206,25 @@ const FALLBACK_REPOS: GitHubRepo[] = [
     pushed_at: "2026-08-03T03:56:48Z",
     homepage: "https://llxpy.github.io/llxpy-blog",
   },
+  {
+    id: 681164221,
+    name: "jobscope",
+    full_name: "llxpy/jobscope",
+    html_url: "https://github.com/llxpy/jobscope",
+    description:
+      "JobScope · 求职信息核对 —— 输入公司名，聚合涉诉、被执行、经营异常、网络提及等公开来源，产出带可信度分级与来源凭据的核对报告。只陈述事实，不下结论——也是防编造数据管线的工程样例。",
+    language: "Python",
+    stargazers_count: 0,
+    forks_count: 0,
+    topics: ["python", "fastapi", "vue", "agent", "job-search", "fact-checking"],
+    license: null,
+    fork: false,
+    size: 4,
+    created_at: "2023-08-21T12:09:11Z",
+    updated_at: "2026-08-04T12:51:40Z",
+    pushed_at: "2026-08-04T12:31:22Z",
+    homepage: "",
+  },
 ]
 
 const CACHE_KEY = "llxpy_github_cache"
@@ -280,8 +299,18 @@ export async function fetchGitHubProfile(): Promise<{
     if (!userRes.ok || !reposRes.ok) throw new Error("GitHub API error")
 
     const user = (await userRes.json()) as GitHubUser
+    const fallbackRepoMap = new Map(FALLBACK_REPOS.map((r) => [r.name, r]))
     const repos = ((await reposRes.json()) as GitHubRepo[])
       .filter((r) => !r.fork)
+      .map((r) => {
+        // GitHub 上未填描述/标签的仓库（如 jobscope），用兜底数据补齐
+        const fb = fallbackRepoMap.get(r.name)
+        return {
+          ...r,
+          description: r.description ?? fb?.description ?? null,
+          topics: r.topics.length > 0 ? r.topics : (fb?.topics ?? []),
+        }
+      })
       .sort((a, b) => b.stargazers_count - a.stargazers_count)
 
     writeCache({ user, repos })

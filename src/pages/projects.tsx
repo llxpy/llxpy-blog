@@ -57,7 +57,7 @@ export function ProjectsPage() {
         <div className="mt-8 flex flex-wrap gap-4">
           <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 backdrop-blur transition-colors hover:border-primary/30">
             <span className="font-display text-2xl font-bold">
-              <CountUp value={Math.max(repos.length - 1, 0)} />
+              <CountUp value={repos.length} />
             </span>
             <span className="text-xs text-muted-foreground">公开项目</span>
           </div>
