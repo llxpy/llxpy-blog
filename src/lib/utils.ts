@@ -58,3 +58,24 @@ export function languageColor(lang: string | null): string {
   if (!lang) return "#8b949e"
   return LANGUAGE_COLORS[lang] ?? "#8b949e"
 }
+
+/**
+ * 项目专属强调色：按名称 hash 生成稳定 hue，
+ * 让每个项目卡片有一眼可辨的视觉标识（替代全站单一 accent）
+ */
+export function repoAccent(name: string): {
+  main: string
+  soft: string
+  glow: string
+} {
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) >>> 0
+  }
+  const hue = hash % 360
+  return {
+    main: `oklch(0.75 0.13 ${hue})`,
+    soft: `oklch(0.75 0.13 ${hue} / 0.45)`,
+    glow: `oklch(0.75 0.13 ${hue} / 0.1)`,
+  }
+}

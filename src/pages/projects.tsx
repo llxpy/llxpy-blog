@@ -110,7 +110,7 @@ export function ProjectsPage() {
 
       {/* 项目网格 */}
       {loading ? (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {[0, 1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
@@ -123,7 +123,7 @@ export function ProjectsPage() {
           <p className="text-muted-foreground">没有匹配的项目。</p>
         </div>
       ) : (
-        <Stagger className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((repo) => (
             <StaggerItem key={repo.id}>
               <TiltCard className="h-full">

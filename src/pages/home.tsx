@@ -202,6 +202,28 @@ export function HomePage() {
         </motion.div>
       </section>
 
+      {/* ============ 技术栈跑马灯（Hero 过渡带） ============ */}
+      <section className="relative border-y border-border/40 py-12">
+        <Reveal>
+          <p className="mb-6 text-center font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            /* 技术栈与方向 */
+          </p>
+          <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]">
+            <div className="animate-marquee flex w-max gap-6 sm:gap-10">
+              {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
+                <span
+                  key={i}
+                  className="flex items-center gap-6 whitespace-nowrap font-display text-lg font-medium text-muted-foreground/60 transition-colors hover:text-primary sm:gap-10 sm:text-xl"
+                >
+                  {tech}
+                  <span className="text-primary/40">✦</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
       {/* ============ 精选项目 ============ */}
       <section className="relative mx-auto max-w-6xl px-6 py-24">
         <Reveal>
@@ -225,7 +247,7 @@ export function HomePage() {
         </Reveal>
 
         {loading ? (
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-8 sm:grid-cols-2">
             {[0, 1, 2, 3].map((i) => (
               <div
                 key={i}
@@ -234,7 +256,7 @@ export function HomePage() {
             ))}
           </div>
         ) : (
-          <Stagger className="grid gap-6 sm:grid-cols-2">
+          <Stagger className="grid gap-8 sm:grid-cols-2">
             {topRepos.map((repo) => (
               <StaggerItem key={repo.id}>
                 <TiltCard>
@@ -244,28 +266,6 @@ export function HomePage() {
             ))}
           </Stagger>
         )}
-      </section>
-
-      {/* ============ 技术栈跑马灯 ============ */}
-      <section className="relative border-y border-border/40 py-10">
-        <Reveal>
-          <p className="mb-6 text-center font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            /* 技术栈与方向 */
-          </p>
-          <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_15%,black_85%,transparent)]">
-            <div className="animate-marquee flex w-max gap-10">
-              {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
-                <span
-                  key={i}
-                  className="flex items-center gap-10 whitespace-nowrap font-display text-xl font-medium text-muted-foreground/60 transition-colors hover:text-primary"
-                >
-                  {tech}
-                  <span className="text-primary/40">✦</span>
-                </span>
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </section>
 
       {/* ============ 最新文章 ============ */}
@@ -290,7 +290,7 @@ export function HomePage() {
           </div>
         </Reveal>
 
-        <Stagger className="grid gap-6 md:grid-cols-3">
+        <Stagger className="grid gap-8 md:grid-cols-3">
           {featuredPosts.slice(0, 3).map((post) => (
             <StaggerItem key={post.slug}>
               <Link to={`/blog/${post.slug}`} className="group block h-full">
@@ -303,7 +303,7 @@ export function HomePage() {
                         {post.readingTime} 分钟阅读
                       </span>
                     </div>
-                    <h3 className="font-display text-lg font-semibold leading-snug transition-colors group-hover:text-primary">
+                    <h3 className="font-display text-xl font-semibold leading-snug transition-colors group-hover:text-primary">
                       {post.title}
                     </h3>
                     <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
