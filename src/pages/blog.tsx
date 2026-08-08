@@ -66,8 +66,8 @@ export function BlogPage() {
 
       {/* 文章列表 */}
       <Stagger className="mt-14 grid gap-6 md:grid-cols-2">
-        {POSTS.slice(1).map((post) => (
-          <StaggerItem key={post.slug}>
+        {POSTS.slice(1).map((post, i) => (
+          <StaggerItem key={post.slug} delay={i * 0.09}>
             <Link to={`/blog/${post.slug}`} className="group block h-full">
               <TiltCard max={5} className="h-full">
                 <Card className="flex h-full flex-col">

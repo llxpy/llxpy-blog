@@ -166,8 +166,8 @@ export function AboutPage() {
         </Reveal>
 
         <Stagger className="mt-10 grid gap-6 sm:grid-cols-2">
-          {PHILOSOPHY.map((item) => (
-            <StaggerItem key={item.title}>
+          {PHILOSOPHY.map((item, i) => (
+            <StaggerItem key={item.title} delay={i * 0.09}>
               <TiltCard max={6} className="h-full">
                 <Card className="group h-full">
                 <CardContent className="flex flex-col gap-4 p-6">

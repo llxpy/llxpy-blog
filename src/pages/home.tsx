@@ -257,8 +257,8 @@ export function HomePage() {
           </div>
         ) : (
           <Stagger className="grid gap-8 sm:grid-cols-2">
-            {topRepos.map((repo) => (
-              <StaggerItem key={repo.id}>
+            {topRepos.map((repo, i) => (
+              <StaggerItem key={repo.id} delay={i * 0.09}>
                 <TiltCard>
                   <ProjectCard repo={repo} />
                 </TiltCard>
@@ -291,8 +291,8 @@ export function HomePage() {
         </Reveal>
 
         <Stagger className="grid gap-8 md:grid-cols-3">
-          {featuredPosts.slice(0, 3).map((post) => (
-            <StaggerItem key={post.slug}>
+          {featuredPosts.slice(0, 3).map((post, i) => (
+            <StaggerItem key={post.slug} delay={i * 0.09}>
               <Link to={`/blog/${post.slug}`} className="group block h-full">
                 <TiltCard max={5} className="h-full">
                   <Card className="flex h-full flex-col">

@@ -29,7 +29,8 @@ export function ProjectsPage() {
       list = list.filter(
         (r) =>
           r.name.toLowerCase().includes(q) ||
-          r.description?.toLowerCase().includes(q)
+          r.description?.toLowerCase().includes(q) ||
+          r.language?.toLowerCase().includes(q)
       )
     }
     return list
@@ -89,7 +90,10 @@ export function ProjectsPage() {
               variant={lang === null ? "default" : "outline"}
               size="sm"
               className="h-8"
-              onClick={() => setLang(null)}
+              onClick={() => {
+                setLang(null)
+                setQuery("")
+              }}
             >
               全部
             </Button>
@@ -99,7 +103,10 @@ export function ProjectsPage() {
                 variant={lang === l ? "default" : "outline"}
                 size="sm"
                 className="h-8"
-                onClick={() => setLang(lang === l ? null : l)}
+                onClick={() => {
+                  setLang(lang === l ? null : l)
+                  setQuery("")
+                }}
               >
                 {l}
               </Button>
@@ -120,12 +127,16 @@ export function ProjectsPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="mt-16 text-center">
-          <p className="text-muted-foreground">没有匹配的项目。</p>
+          <p className="text-muted-foreground">
+            {query.trim()
+              ? `没有匹配「${query.trim()}」的项目——试试清空搜索词或切换分类`
+              : "没有匹配的项目。"}
+          </p>
         </div>
       ) : (
         <Stagger className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((repo) => (
-            <StaggerItem key={repo.id}>
+          {filtered.map((repo, i) => (
+            <StaggerItem key={repo.id} delay={i * 0.09}>
               <TiltCard className="h-full">
                 <ProjectCard repo={repo} />
               </TiltCard>
