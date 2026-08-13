@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 const NAV_ITEMS = [
   { to: "/", label: "首页" },
   { to: "/projects", label: "项目" },
+  { to: "/notes", label: "笔记" },
   { to: "/blog", label: "文章" },
   { to: "/about", label: "关于" },
 ]

@@ -54,6 +54,9 @@ export function Footer() {
               <Link className="transition-colors hover:text-foreground" to="/projects">
                 项目
               </Link>
+              <Link className="transition-colors hover:text-foreground" to="/notes">
+                笔记
+              </Link>
               <Link className="transition-colors hover:text-foreground" to="/blog">
                 文章
               </Link>

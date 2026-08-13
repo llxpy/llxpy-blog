@@ -12,6 +12,8 @@ import { HomePage } from "@/pages/home"
 import { ProjectsPage } from "@/pages/projects"
 import { BlogPage } from "@/pages/blog"
 import { PostPage } from "@/pages/post"
+import { NotesPage } from "@/pages/notes"
+import { NotePage } from "@/pages/note"
 import { AboutPage } from "@/pages/about"
 import { NotFoundPage } from "@/pages/not-found"
 
@@ -32,6 +34,8 @@ function AnimatedRoutes() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<PostPage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/notes/:slug" element={<NotePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
