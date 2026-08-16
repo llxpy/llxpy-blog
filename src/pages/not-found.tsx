@@ -9,7 +9,7 @@ const LINES: { text: string; tone?: LineTone }[] = [
   { text: "$ cd llxpy.dev && ls" },
   { text: "index.html   projects/   blog/   about/", tone: "output" },
   { text: "$ cat 404.html" },
-  { text: "ERROR 404 — 这个页面在暗面里迷路了", tone: "error" },
+  { text: "ERROR 404 — 这个页面在妄想里迷路了", tone: "error" },
   {
     text: "你访问的路径不存在。它可能被删除、移动，或从未存在过。",
     tone: "output",

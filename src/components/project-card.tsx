@@ -61,7 +61,7 @@ export function ProjectCard({
         </div>
 
         <p className="line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground/80">
-          {cleanDescription(repo.description) || "一个正在暗面中孕育的项目。"}
+          {cleanDescription(repo.description) || "一个正在孕育中的小妄想。"}
         </p>
 
         {repo.topics.length > 0 && (

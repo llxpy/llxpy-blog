@@ -39,11 +39,13 @@ export function Navbar() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link to="/" className="group flex items-center gap-3">
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-sm font-bold text-black transition-transform duration-300 group-hover:rotate-6">
-            L
-          </span>
+          <img
+            src={`${import.meta.env.BASE_URL}avatar.jpg`}
+            alt="LLXPY"
+            className="h-8 w-8 rounded-lg object-cover ring-2 ring-primary/30 transition-all duration-300 group-hover:ring-primary/60 group-hover:scale-105"
+          />
           <span className="font-display text-base font-semibold tracking-tight">
-            llxpy<span className="text-primary">.</span>dev
+            LLX<span className="text-primary">.</span>PY
           </span>
         </Link>
 

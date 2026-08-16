@@ -11,15 +11,17 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Link to="/" className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-sm font-bold text-black">
-                L
-              </span>
+              <img
+                src={`${import.meta.env.BASE_URL}avatar.jpg`}
+                alt="LLXPY"
+                className="h-8 w-8 rounded-lg object-cover ring-2 ring-primary/30"
+              />
               <span className="font-display text-base font-semibold">
-                llxpy<span className="text-primary">.</span>dev
+                LLX<span className="text-primary">.</span>PY
               </span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              中文大模型语义推理 · 多智能体架构 · 白盒引擎 —— 记录在暗面里构建的每一行。
+              中文大模型语义推理 · 多智能体架构 · 白盒引擎 —— 记录妄想描绘的每一行。
             </p>
           </div>
 
@@ -70,10 +72,10 @@ export function Footer() {
         <Separator className="my-8" />
 
         <div className="flex flex-col items-center justify-between gap-3 text-xs text-muted-foreground/70 sm:flex-row">
-          <p>© {new Date().getFullYear()} llxpy · 用 React 与星辰构建</p>
+          <p>© {new Date().getFullYear()} LLXPY · 用 React 与星辰描绘</p>
           <p className="font-mono">
             <span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse-slow rounded-full bg-emerald-400" />
-            status: building in the dark
+            status: whimsical depiction
           </p>
         </div>
       </div>

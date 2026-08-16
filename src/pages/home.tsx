@@ -85,7 +85,7 @@ export function HomePage() {
         >
           <Badge variant="glow" className="mb-8 px-4 py-1.5">
             <Sparkles className="h-3 w-3" />
-            building in the dark · 在暗面构建
+            whimsical depiction · 妄想描绘
           </Badge>
         </motion.div>
 
@@ -107,8 +107,8 @@ export function HomePage() {
                   if (!img.src.endsWith("avatar.jpg")) img.src = AVATAR_FALLBACK_SRC
                 }}
               />
-              <AvatarFallback className="rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-3xl font-bold text-black">
-                L
+              <AvatarFallback className="rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-2xl font-bold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                LL
               </AvatarFallback>
             </Avatar>
             <span className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full border-4 border-background bg-emerald-400" />
@@ -118,8 +118,8 @@ export function HomePage() {
         </motion.div>
 
         {/* 主标题：逐字浮现 */}
-        <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl">
-          <SplitTitle text="llxpy" className="text-gradient" delay={0.25} />
+        <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+          <SplitTitle text="LLXPY" className="text-gradient drop-shadow-[0_0_24px_oklch(0.75_0.12_260/0.45)]" delay={0.25} />
         </h1>
 
         <motion.p
@@ -128,7 +128,7 @@ export function HomePage() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
         >
-          独立开发者 · AI Agent 研究者
+          个人开发者 · AI Agent 研究者
           <br className="sm:hidden" />
           中文大模型语义推理 · 多智能体架构 · 白盒引擎
           <motion.span
@@ -372,7 +372,7 @@ export function HomePage() {
         <Reveal delay={0.15}>
           <div className="mt-16 flex flex-col items-center gap-4 text-center">
             <h3 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              想看看代码里的暗面？
+              想看看代码里的妄想？
             </h3>
             <p className="max-w-md text-sm text-muted-foreground">
               所有项目都在 GitHub 上开源，欢迎 star、fork 与交流。

@@ -82,7 +82,7 @@ export function AboutPage() {
         <Card className="glow-border mt-12 overflow-hidden">
           <CardContent className="flex flex-col gap-8 p-8 sm:p-10 md:flex-row md:items-center">
             <div className="relative shrink-0">
-              <div className="glow-border rounded-full p-[3px]">
+              <div className="glow-border group rounded-full p-[3px]">
                 <Avatar className="h-32 w-32 rounded-full">
                   <AvatarImage
                     src={user?.avatar_url}
@@ -93,8 +93,8 @@ export function AboutPage() {
                       if (!img.src.endsWith("avatar.jpg")) img.src = AVATAR_FALLBACK_SRC
                     }}
                   />
-                  <AvatarFallback className="rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-4xl font-bold text-black">
-                    L
+                  <AvatarFallback className="rounded-full bg-gradient-to-br from-cyan-400 via-indigo-400 to-purple-400 text-3xl font-bold text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    LL
                   </AvatarFallback>
                 </Avatar>
               </div>
@@ -106,13 +106,17 @@ export function AboutPage() {
                 <h2 className="font-display text-2xl font-bold tracking-tight">
                   {user?.name || "llxpy"}
                 </h2>
-                <Badge variant="glow">独立开发者 · AI Agent 研究者</Badge>
+                <Badge variant="glow">个人开发者 · AI Agent 研究者</Badge>
               </div>
               <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-                黑马程序员学员出身，偏爱在「暗面」里构建不循常理的系统：
+                黑马程序员学员出身，偏爱用代码描绘不循常理的妄想：
                 让 AI 用中文推理不跑偏的语义约束架构、蚁后/工蚁分离的 Agent
                 安全模型、摊开在知识图谱上的白盒推理引擎。
                 相信架构即安全、语义即约束、流程即工程。
+              </p>
+              <p className="mt-3 font-mono text-xs text-muted-foreground/70">
+                <span className="font-display font-semibold text-primary/80">LLXPY</span>
+                {" "}是「珑珑小朋友」的缩写 —— 一个用代码描绘妄想的小朋友。
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {FOCUS.map((f) => (
@@ -220,13 +224,13 @@ export function AboutPage() {
               <CardContent className="relative flex h-full flex-col justify-center gap-6 p-8">
                 <Quote className="h-8 w-8 text-primary/50" />
                 <p className="font-display text-xl font-medium leading-relaxed text-foreground/90">
-                  “在暗面里构建，不是躲藏，
+                  “妄想描绘，不是躲进幻想，
                   <br />
                   而是让光更清楚地照进代码。”
                 </p>
                 <Separator className="w-24 bg-primary/40" />
                 <div>
-                  <p className="font-display text-sm font-semibold">llxpy</p>
+                  <p className="font-display text-sm font-semibold">LLXPY</p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     builder · thinker · tinkerer
                   </p>

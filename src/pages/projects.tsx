@@ -49,7 +49,7 @@ export function ProjectsPage() {
           项目<span className="text-primary">.</span>
         </h1>
         <p className="mt-4 max-w-xl text-muted-foreground">
-          在暗面里构建的实验、引擎与工具——全部开源，欢迎探索。
+          妄想描绘出的实验、引擎与工具——全部开源，欢迎探索。
         </p>
       </Reveal>
 
