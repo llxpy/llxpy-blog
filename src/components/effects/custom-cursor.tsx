@@ -5,15 +5,18 @@ const INTERACTIVE_SELECTOR =
   'a, button, input, textarea, select, label, [role="button"], [data-slot="button"], [data-cursor]'
 
 /**
- * 自定义光标：中心小圆点（快跟随）+ 外圈圆环（弹性慢跟随）
+ * 自定义光标 + 光晕合一：
+ * - 中心小圆点（快跟随）+ 外圈圆环（弹性慢跟随）
+ * - 光晕（柔光渐变斑，跟随鼠标平滑移动）
  * - 悬停可交互元素：圆环放大并显现光晕
  * - 按下：整体收缩
- * - 初始隐藏，首次鼠标移动时定位并淡入（避免初始猜测位置与实际鼠标分离）
- * - 仅桌面精指针设备启用；启用后隐藏系统光标
+ * - 仅桌面精细指针设备启用
+ * - 共用同一个 rAF 循环，避免两次独立动画循环
  */
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
   const [enabled, setEnabled] = useState(false)
   const [hovering, setHovering] = useState(false)
   const [pressed, setPressed] = useState(false)
@@ -31,11 +34,12 @@ export function CustomCursor() {
     let y = window.innerHeight / 3
     let ringX = x
     let ringY = y
+    let glowX = x
+    let glowY = y
 
     const onMove = (e: MouseEvent) => {
       x = e.clientX
       y = e.clientY
-      // 首次移动鼠标时定位并淡入，避免初始位置与实际鼠标分离
       if (!visibleRef.current) {
         visibleRef.current = true
         setVisible(true)
@@ -43,7 +47,6 @@ export function CustomCursor() {
     }
 
     const onLeave = (e: MouseEvent) => {
-      // 鼠标移出浏览器窗口时隐藏，移回后由下一次 mousemove 重新定位
       if (!e.relatedTarget && visibleRef.current) {
         visibleRef.current = false
         setVisible(false)
@@ -61,9 +64,9 @@ export function CustomCursor() {
     const tick = () => {
       ringX += (x - ringX) * 0.16
       ringY += (y - ringY) * 0.16
-      // 只更新 CSS 变量，transform 由浏览器实时计算：
-      // translate(-50%) 的百分比始终基于元素当前尺寸（含过渡中间态），
-      // 避免 rAF 丢帧时 transform 快照与尺寸过渡不同步导致圆心偏移
+      glowX += (x - glowX) * 0.08
+      glowY += (y - glowY) * 0.08
+
       if (dotRef.current) {
         dotRef.current.style.setProperty("--cursor-x", `${x}px`)
         dotRef.current.style.setProperty("--cursor-y", `${y}px`)
@@ -71,6 +74,9 @@ export function CustomCursor() {
       if (ringRef.current) {
         ringRef.current.style.setProperty("--cursor-x", `${ringX}px`)
         ringRef.current.style.setProperty("--cursor-y", `${ringY}px`)
+      }
+      if (glowRef.current) {
+        glowRef.current.style.transform = `translate3d(${glowX - 200}px, ${glowY - 200}px, 0)`
       }
       raf = requestAnimationFrame(tick)
     }
@@ -103,6 +109,15 @@ export function CustomCursor() {
         visible ? "opacity-100" : "opacity-0"
       )}
     >
+      {/* 光晕 */}
+      <div
+        ref={glowRef}
+        className="absolute left-0 top-0 h-[400px] w-[400px] rounded-full opacity-60 mix-blend-screen transition-opacity duration-1000"
+        style={{
+          background:
+            "radial-gradient(circle, oklch(0.7 0.14 260 / 0.12), transparent 60%)",
+        }}
+      />
       {/* 外圈圆环 */}
       <div
         ref={ringRef}
@@ -116,9 +131,6 @@ export function CustomCursor() {
           {
             borderRadius: "9999px",
             borderWidth: 1.5,
-            // 缩放必须写在 transform 链末尾：独立 scale 属性会连位移一起缩放（CSS
-            // Transforms L2 中独立属性先于 transform 应用），导致按下时圆心向
-            // 左上偏移；链内 scale 只缩放元素自身，圆心保持锁定鼠标位置
             transform:
               "translate3d(var(--cursor-x), var(--cursor-y), 0) translate(-50%, -50%) scale(var(--cursor-scale, 1))",
             "--cursor-scale": pressed ? "0.9" : "1",

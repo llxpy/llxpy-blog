@@ -21,26 +21,26 @@ export function AuroraBackground() {
       {/* 极光色斑 */}
       <div
         className={cn(
-          "absolute -top-[20%] left-1/2 h-[60vh] w-[80vw] -translate-x-1/2 rounded-full blur-[120px] transition-opacity duration-1000",
+          "absolute -top-[20%] left-1/2 h-[60vh] w-[80vw] -translate-x-1/2 rounded-full blur-[80px] transition-opacity duration-1000",
           "bg-[oklch(0.55_0.16_260/0.22)]",
           mounted ? "opacity-100" : "opacity-0"
         )}
       />
       <div
         className={cn(
-          "animate-float absolute top-[15%] -left-[10%] h-[40vh] w-[35vw] rounded-full bg-[oklch(0.6_0.15_310/0.12)] blur-[100px] transition-opacity duration-1000",
+          "animate-float absolute top-[15%] -left-[10%] h-[40vh] w-[35vw] rounded-full bg-[oklch(0.6_0.15_310/0.12)] blur-[70px] transition-opacity duration-1000",
           mounted ? "opacity-100" : "opacity-0"
         )}
       />
       <div
         className={cn(
-          "animate-float absolute top-[30%] -right-[8%] h-[45vh] w-[38vw] rounded-full bg-[oklch(0.5_0.14_210/0.14)] blur-[110px] transition-opacity duration-1000 [animation-delay:2s]",
+          "animate-float absolute top-[30%] -right-[8%] h-[45vh] w-[38vw] rounded-full bg-[oklch(0.5_0.14_210/0.14)] blur-[75px] transition-opacity duration-1000 [animation-delay:2s]",
           mounted ? "opacity-100" : "opacity-0"
         )}
       />
       <div
         className={cn(
-          "absolute bottom-[-25%] left-[20%] h-[50vh] w-[60vw] rounded-full bg-[oklch(0.55_0.13_280/0.1)] blur-[130px] transition-opacity duration-1000",
+          "absolute bottom-[-25%] left-[20%] h-[50vh] w-[60vw] rounded-full bg-[oklch(0.55_0.13_280/0.1)] blur-[85px] transition-opacity duration-1000",
           mounted ? "opacity-100" : "opacity-0"
         )}
       />

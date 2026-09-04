@@ -109,7 +109,7 @@ export function AboutPage() {
                 <Badge variant="glow">个人开发者 · AI Agent 研究者</Badge>
               </div>
               <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-                黑马程序员学员出身，偏爱用代码描绘不循常理的妄想：
+                偏爱用代码描绘不循常理的妄想：
                 让 AI 用中文推理不跑偏的语义约束架构、蚁后/工蚁分离的 Agent
                 安全模型、摊开在知识图谱上的白盒推理引擎。
                 相信架构即安全、语义即约束、流程即工程。
