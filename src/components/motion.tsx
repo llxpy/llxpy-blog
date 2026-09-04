@@ -1,5 +1,4 @@
-import { motion, useReducedMotion } from "framer-motion"
-import type { ReactNode } from "react"
+import { useEffect, useRef, type ReactNode } from "react"
 
 export function Reveal({
   children,
@@ -12,17 +11,42 @@ export function Reveal({
   y?: number
   className?: string
 }) {
-  const reduce = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+    if (prefersReduced) {
+      el.style.opacity = "1"
+      el.style.transform = "none"
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.transitionDelay = `${delay * 1000}ms`
+          el.classList.add("reveal-visible")
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "-80px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [delay])
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: reduce ? 0 : y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+    <div
+      ref={ref}
+      className={`reveal ${className ?? ""}`}
+      style={{ transform: `translateY(${y}px)` }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -33,8 +57,6 @@ export function Stagger({
   children: ReactNode
   className?: string
 }) {
-  // 普通容器：入场动画由 StaggerItem 各自独立触发，
-  // 避免容器 whileInView once 触发后，筛选重挂载的子项卡在 hidden（占位但不可见）
   return <div className={className}>{children}</div>
 }
 
@@ -47,16 +69,41 @@ export function StaggerItem({
   className?: string
   delay?: number
 }) {
-  const reduce = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+    if (prefersReduced) {
+      el.style.opacity = "1"
+      el.style.transform = "none"
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.transitionDelay = `${delay * 1000}ms`
+          el.classList.add("reveal-visible")
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "-60px" }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [delay])
+
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: reduce ? 0 : 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+    <div
+      ref={ref}
+      className={`reveal ${className ?? ""}`}
+      style={{ transform: "translateY(24px)" }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }

@@ -4,27 +4,48 @@ import { AnimatePresence, motion } from "framer-motion"
 import { GitHubProvider } from "@/context/github-context"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { HomePage } from "@/pages/home"
-import { ProjectsPage } from "@/pages/projects"
-import { BlogPage } from "@/pages/blog"
-import { PostPage } from "@/pages/post"
-import { NotesPage } from "@/pages/notes"
-import { NotePage } from "@/pages/note"
-import { AboutPage } from "@/pages/about"
-import { LearnPage } from "@/pages/learn"
-import { NotFoundPage } from "@/pages/not-found"
 
-const AuroraBackground = lazy(() =>
-  import("@/components/aurora-background").then((m) => ({ default: m.AuroraBackground }))
+const HomePage = lazy(() =>
+  import("@/pages/home").then((m) => ({ default: m.HomePage }))
 )
-const ParticleField = lazy(() =>
-  import("@/components/effects/particle-field").then((m) => ({ default: m.ParticleField }))
+const ProjectsPage = lazy(() =>
+  import("@/pages/projects").then((m) => ({ default: m.ProjectsPage }))
+)
+const BlogPage = lazy(() =>
+  import("@/pages/blog").then((m) => ({ default: m.BlogPage }))
+)
+const PostPage = lazy(() =>
+  import("@/pages/post").then((m) => ({ default: m.PostPage }))
+)
+const NotesPage = lazy(() =>
+  import("@/pages/notes").then((m) => ({ default: m.NotesPage }))
+)
+const NotePage = lazy(() =>
+  import("@/pages/note").then((m) => ({ default: m.NotePage }))
+)
+const AboutPage = lazy(() =>
+  import("@/pages/about").then((m) => ({ default: m.AboutPage }))
+)
+const LearnPage = lazy(() =>
+  import("@/pages/learn").then((m) => ({ default: m.LearnPage }))
+)
+const NotFoundPage = lazy(() =>
+  import("@/pages/not-found").then((m) => ({ default: m.NotFoundPage }))
+)
+const AuroraBackground = lazy(() =>
+  import("@/components/aurora-background").then((m) => ({
+    default: m.AuroraBackground,
+  }))
 )
 const ScrollProgress = lazy(() =>
-  import("@/components/effects/scroll-progress").then((m) => ({ default: m.ScrollProgress }))
+  import("@/components/effects/scroll-progress").then((m) => ({
+    default: m.ScrollProgress,
+  }))
 )
 const CustomCursor = lazy(() =>
-  import("@/components/effects/custom-cursor").then((m) => ({ default: m.CustomCursor }))
+  import("@/components/effects/custom-cursor").then((m) => ({
+    default: m.CustomCursor,
+  }))
 )
 
 function AnimatedRoutes() {
@@ -36,7 +57,6 @@ function AnimatedRoutes() {
       {!isLearn && (
         <Suspense fallback={null}>
           <AuroraBackground />
-          <ParticleField />
           <ScrollProgress />
           <CustomCursor />
         </Suspense>
@@ -51,17 +71,19 @@ function AnimatedRoutes() {
           transition={{ duration: 0.25 }}
           className="relative z-10 min-h-screen"
         >
-          <Routes location={location}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<PostPage />} />
-            <Route path="/notes" element={<NotesPage />} />
-            <Route path="/notes/:slug" element={<NotePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/learn" element={<LearnPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<PostPage />} />
+              <Route path="/notes" element={<NotesPage />} />
+              <Route path="/notes/:slug" element={<NotePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/learn" element={<LearnPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </motion.main>
       </AnimatePresence>
       <Footer />

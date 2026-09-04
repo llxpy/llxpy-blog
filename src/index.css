@@ -213,6 +213,20 @@
   }
 }
 
+/* ===== Reveal animations ===== */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    transform 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) !important;
+}
+
+/* ===== Utility classes ===== */
 .animate-blink {
   animation: blink 1.1s step-end infinite;
 }
