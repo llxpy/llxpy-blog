@@ -15,6 +15,7 @@ import { PostPage } from "@/pages/post"
 import { NotesPage } from "@/pages/notes"
 import { NotePage } from "@/pages/note"
 import { AboutPage } from "@/pages/about"
+import { LearnPage } from "@/pages/learn"
 import { NotFoundPage } from "@/pages/not-found"
 
 function AnimatedRoutes() {
@@ -37,6 +38,7 @@ function AnimatedRoutes() {
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/notes/:slug" element={<NotePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/learn" element={<LearnPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.main>

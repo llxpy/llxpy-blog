@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: "/notes", label: "笔记" },
   { to: "/blog", label: "文章" },
   { to: "/about", label: "关于" },
+  { to: "/learn", label: "学习" },
 ]
 
 export function Navbar() {
