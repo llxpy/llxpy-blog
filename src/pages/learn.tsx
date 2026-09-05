@@ -15,6 +15,7 @@ import { RoadmapTab } from "@/components/learn/roadmap-tab"
 import { KnowledgeTab } from "@/components/learn/knowledge-tab"
 import { ProjectsTab } from "@/components/learn/projects-tab"
 import { CheckinTab } from "@/components/learn/checkin-tab"
+import { ProfileSwitcher } from "@/components/learn/profile-switcher"
 
 const TABS = [
   { id: "roadmap" as const, label: "学习路线", icon: MapPin },
@@ -96,12 +97,15 @@ export function LearnPage() {
                   : "未开始"}
               </span>
             </h2>
-            <button
-              onClick={() => store.exportData()}
-              className="rounded-lg border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
-            >
-              导出数据
-            </button>
+            <div className="flex items-center gap-2">
+              <ProfileSwitcher store={store} />
+              <button
+                onClick={() => store.exportData()}
+                className="rounded-lg border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:text-foreground"
+              >
+                导出数据
+              </button>
+            </div>
           </div>
           <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[

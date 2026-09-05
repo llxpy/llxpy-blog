@@ -1,6 +1,7 @@
 import { useCallback, useSyncExternalStore } from "react"
 
-const STORAGE_KEY = "wb_ai_fullstack_v1"
+const LEARN_KEY_PREFIX = "wb_learn_v1_"
+const PROFILES_KEY = "wb_profiles_v1"
 
 export interface LearnTask {
   id: string
@@ -28,6 +29,26 @@ interface LearnState {
   streak: number
 }
 
+export interface Profile {
+  id: string
+  name: string
+  color: string
+  createdAt: number
+}
+
+interface ProfileStore {
+  activeId: string | null
+  profiles: Profile[]
+}
+
+export const PROFILE_COLORS = [
+  "from-cyan-400 to-blue-500",
+  "from-emerald-400 to-teal-500",
+  "from-amber-400 to-orange-500",
+  "from-rose-400 to-pink-500",
+  "from-violet-400 to-purple-500",
+]
+
 function todayStr() {
   return new Date().toISOString().slice(0, 10)
 }
@@ -42,8 +63,41 @@ function tid() {
   return "t_" + Math.random().toString(36).slice(2, 9)
 }
 
-function loadState(): LearnState {
-  const defaultState: LearnState = {
+function pid() {
+  return "p" + Math.random().toString(36).slice(2, 10)
+}
+
+function defaultTasks(): LearnTask[] {
+  return [
+    {
+      id: tid(),
+      title: "读《Linux 是什么》一节",
+      stageId: 1,
+      dueDate: todayStr(),
+      done: false,
+      createdAt: Date.now(),
+    },
+    {
+      id: tid(),
+      title: "安装 VirtualBox + Rocky Linux",
+      stageId: 1,
+      dueDate: todayStr(),
+      done: false,
+      createdAt: Date.now(),
+    },
+    {
+      id: tid(),
+      title: "跟着做\"Hello World\" 终端命令",
+      stageId: 1,
+      dueDate: yesterdayStr(),
+      done: false,
+      createdAt: Date.now(),
+    },
+  ]
+}
+
+function defaultState(): LearnState {
+  return {
     completedStages: [],
     currentStage: 1,
     knownPoints: {},
@@ -53,47 +107,49 @@ function loadState(): LearnState {
     lastVisit: null,
     streak: 0,
   }
+}
+
+function loadProfiles(): ProfileStore {
+  const def: ProfileStore = { activeId: null, profiles: [] }
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) {
-      const parsed = JSON.parse(raw)
-      Object.assign(defaultState, parsed)
-    }
+    const raw = localStorage.getItem(PROFILES_KEY)
+    if (raw) Object.assign(def, JSON.parse(raw))
+    if (!Array.isArray(def.profiles)) def.profiles = []
   } catch {
     // ignore
   }
-  if (defaultState.tasks.length === 0) {
-    defaultState.tasks = [
-      {
-        id: tid(),
-        title: '读《Linux 是什么》一节',
-        stageId: 1,
-        dueDate: todayStr(),
-        done: false,
-        createdAt: Date.now(),
-      },
-      {
-        id: tid(),
-        title: "安装 VirtualBox + Rocky Linux",
-        stageId: 1,
-        dueDate: todayStr(),
-        done: false,
-        createdAt: Date.now(),
-      },
-      {
-        id: tid(),
-        title: '跟着做"Hello World" 终端命令',
-        stageId: 1,
-        dueDate: yesterdayStr(),
-        done: false,
-        createdAt: Date.now(),
-      },
-    ]
-  }
-  return defaultState
+  return def
 }
 
-function computeStreak(checkins: Record<string, CheckinRecord>, lastVisit: string | null): number {
+function saveProfiles(ps: ProfileStore) {
+  try {
+    localStorage.setItem(PROFILES_KEY, JSON.stringify(ps))
+  } catch {
+    // ignore
+  }
+}
+
+function stateKey(id: string) {
+  return LEARN_KEY_PREFIX + id
+}
+
+function loadState(id: string): LearnState {
+  const s = defaultState()
+  try {
+    const raw = localStorage.getItem(stateKey(id))
+    if (raw) Object.assign(s, JSON.parse(raw))
+  } catch {
+    // ignore
+  }
+  if (!Array.isArray(s.tasks)) s.tasks = []
+  if (s.tasks.length === 0) s.tasks = defaultTasks()
+  return s
+}
+
+function computeStreak(
+  checkins: Record<string, CheckinRecord>,
+  lastVisit: string | null
+): number {
   const today = todayStr()
   const ys = yesterdayStr()
   let streak = 0
@@ -105,14 +161,40 @@ function computeStreak(checkins: Record<string, CheckinRecord>, lastVisit: strin
 }
 
 // Shared mutable state for external store pattern
-let state = loadState()
+let profileStore = loadProfiles()
+let state: LearnState = defaultState()
 let listeners: Array<() => void> = []
+let initialized = false
+
+function ensureProfile() {
+  const valid = profileStore.profiles.some((p) => p.id === profileStore.activeId)
+  if (!valid) {
+    const p: Profile = {
+      id: pid(),
+      name: "新同学",
+      color: PROFILE_COLORS[Math.floor(Math.random() * PROFILE_COLORS.length)],
+      createdAt: Date.now(),
+    }
+    profileStore.profiles.push(p)
+    profileStore.activeId = p.id
+    saveProfiles(profileStore)
+  }
+}
+
+function init() {
+  if (initialized) return
+  initialized = true
+  ensureProfile()
+  state = loadState(profileStore.activeId!)
+}
 
 function saveAndNotify() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
-  } catch {
-    // ignore
+  if (profileStore.activeId) {
+    try {
+      localStorage.setItem(stateKey(profileStore.activeId), JSON.stringify(state))
+    } catch {
+      // ignore
+    }
   }
   state.streak = computeStreak(state.checkins, state.lastVisit)
   for (const l of listeners) l()
@@ -130,7 +212,57 @@ function getSnapshot() {
 }
 
 export function useLearnStore() {
+  init()
   const s = useSyncExternalStore(subscribe, getSnapshot)
+
+  const switchProfile = useCallback((id: string) => {
+    if (id === profileStore.activeId) return
+    if (!profileStore.profiles.some((p) => p.id === id)) return
+    profileStore.activeId = id
+    saveProfiles(profileStore)
+    state = loadState(id)
+    saveAndNotify()
+  }, [])
+
+  const createProfile = useCallback((name: string) => {
+    const p: Profile = {
+      id: pid(),
+      name: name.trim() ? name.trim() : "新同学",
+      color: PROFILE_COLORS[profileStore.profiles.length % PROFILE_COLORS.length],
+      createdAt: Date.now(),
+    }
+    profileStore.profiles.push(p)
+    profileStore.activeId = p.id
+    saveProfiles(profileStore)
+    state = loadState(p.id)
+    saveAndNotify()
+  }, [])
+
+  const renameProfile = useCallback((id: string, name: string) => {
+    const p = profileStore.profiles.find((x) => x.id === id)
+    if (p && name.trim()) {
+      p.name = name.trim()
+      saveProfiles(profileStore)
+      saveAndNotify()
+    }
+  }, [])
+
+  const deleteProfile = useCallback((id: string) => {
+    if (profileStore.profiles.length <= 1) return
+    profileStore.profiles = profileStore.profiles.filter((p) => p.id !== id)
+    try {
+      localStorage.removeItem(stateKey(id))
+    } catch {
+      // ignore
+    }
+    if (profileStore.activeId === id) {
+      const next = profileStore.profiles[0]
+      profileStore.activeId = next.id
+      state = loadState(next.id)
+    }
+    saveProfiles(profileStore)
+    saveAndNotify()
+  }, [])
 
   const toggleComplete = useCallback((id: number) => {
     const idx = state.completedStages.indexOf(id)
@@ -215,7 +347,8 @@ export function useLearnStore() {
     })
     const a = document.createElement("a")
     a.href = URL.createObjectURL(blob)
-    a.download = `ai-fullstack-${todayStr()}.json`
+    const safeName = (activeProfile?.name || "learn").replace(/[^\w\u4e00-\u9fa5]/g, "_")
+    a.download = `${safeName}-learning-${todayStr()}.json`
     a.click()
   }, [])
 
@@ -225,6 +358,8 @@ export function useLearnStore() {
     saveAndNotify()
   }, [])
 
+  const activeProfile =
+    profileStore.profiles.find((p) => p.id === profileStore.activeId) ?? null
   const totalKnown = Object.values(s.knownPoints).reduce(
     (a, b) => a + b.length,
     0
@@ -233,6 +368,12 @@ export function useLearnStore() {
   return {
     state: s,
     totalKnown,
+    activeProfile,
+    profiles: profileStore.profiles,
+    createProfile,
+    switchProfile,
+    renameProfile,
+    deleteProfile,
     toggleComplete,
     setCurrentStage,
     toggleKnown,
