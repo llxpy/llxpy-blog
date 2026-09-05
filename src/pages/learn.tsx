@@ -60,21 +60,21 @@ export function LearnPage() {
       {/* 统计 */}
       <Reveal delay={0.1}>
         <div className="mt-8 flex flex-wrap gap-4">
-          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 backdrop-blur transition-colors hover:border-primary/30">
+          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 transition-colors hover:border-primary/30">
             <span className="flex items-center gap-2 font-display text-2xl font-bold">
               <Flame className="h-5 w-5 text-orange-400" />
               {state.streak}
             </span>
             <span className="text-xs text-muted-foreground">连续学习天数</span>
           </div>
-          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 backdrop-blur transition-colors hover:border-primary/30">
+          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 transition-colors hover:border-primary/30">
             <span className="flex items-center gap-2 font-display text-2xl font-bold">
               <GraduationCap className="h-5 w-5 text-amber-400" />
               {state.totalHours}
             </span>
             <span className="text-xs text-muted-foreground">累计学习小时</span>
           </div>
-          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 backdrop-blur transition-colors hover:border-primary/30">
+          <div className="flex items-center gap-3 rounded-xl border border-border/60 bg-card/40 px-5 py-3 transition-colors hover:border-primary/30">
             <span className="flex items-center gap-2 font-display text-2xl font-bold">
               <Package className="h-5 w-5 text-primary" />
               {state.completedStages.length}
@@ -87,7 +87,7 @@ export function LearnPage() {
 
       {/* 今日概览 */}
       <Reveal delay={0.15}>
-        <div className="mt-8 rounded-2xl border border-border/60 bg-card/60 p-5 backdrop-blur-sm sm:p-6">
+        <div className="mt-8 rounded-2xl border border-border/60 bg-card/60 p-5 sm:p-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <h2 className="flex items-center gap-2 text-base font-semibold">
               今日要处理
@@ -140,11 +140,12 @@ export function LearnPage() {
 
       {/* Tabs */}
       <Reveal delay={0.2}>
-        <div className="mb-5 flex gap-1.5 overflow-x-auto rounded-xl border border-border/60 bg-card/60 p-1 backdrop-blur-sm">
+        <div className="mb-5 flex gap-1.5 overflow-x-auto rounded-xl border border-border/60 bg-card/60 p-1">
           {TABS.map((t) => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
+              data-tab={t.id}
               className={cn(
                 "flex min-w-[80px] flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                 tab === t.id

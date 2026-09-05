@@ -15,7 +15,7 @@ export function RoadmapTab({
   return (
     <div>
       {/* Stage selector */}
-      <div className="mb-5 rounded-2xl border border-border/60 bg-card/60 p-5 backdrop-blur-sm">
+      <div className="mb-5 rounded-2xl border border-border/60 bg-card/60 p-5">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           <h3 className="font-display text-sm font-semibold">
             完整学习路线

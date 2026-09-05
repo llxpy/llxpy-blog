@@ -53,7 +53,7 @@ export function CheckinTab({
   return (
     <div className="space-y-5">
       {/* Heatmap + stats */}
-      <div className="rounded-2xl border border-border/60 bg-card/60 p-5 backdrop-blur-sm">
+      <div className="rounded-2xl border border-border/60 bg-card/60 p-5">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           <h3 className="font-display text-sm font-semibold">
             每日打卡
@@ -113,7 +113,7 @@ export function CheckinTab({
       </div>
 
       {/* Task management */}
-      <div className="rounded-2xl border border-border/60 bg-card/60 p-5 backdrop-blur-sm">
+      <div className="rounded-2xl border border-border/60 bg-card/60 p-5">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="font-display text-sm font-semibold">我的学习任务</h3>
           <span className="text-[11px] text-muted-foreground">
