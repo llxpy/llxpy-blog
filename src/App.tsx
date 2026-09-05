@@ -50,17 +50,14 @@ const CustomCursor = lazy(() =>
 
 function AnimatedRoutes() {
   const location = useLocation()
-  const isLearn = location.pathname.endsWith("/learn")
 
   return (
     <>
-      {!isLearn && (
-        <Suspense fallback={null}>
-          <AuroraBackground />
-          <ScrollProgress />
-          <CustomCursor />
-        </Suspense>
-      )}
+      <Suspense fallback={null}>
+        <AuroraBackground />
+        <ScrollProgress />
+        <CustomCursor />
+      </Suspense>
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main
