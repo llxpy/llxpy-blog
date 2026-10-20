@@ -149,7 +149,7 @@ export function ProjectsPage() {
       <Reveal delay={0.2}>
         <div className="mt-14 flex flex-wrap items-center gap-2 border-t border-border/50 pt-8 text-xs text-muted-foreground">
           <span className="mr-1">标签：</span>
-          {["AI Agent", "中文NLP", "推理引擎", "多智能体", "音频", "规范"].map(
+          {["AI Agent", "中文NLP", "本地 RAG", "多智能体", "运维 Agent", "开发工具", "音频", "桌面应用"].map(
             (tag) => (
               <Badge key={tag} variant="outline" className="cursor-pointer transition-colors hover:border-primary/50 hover:text-primary">
                 {tag}

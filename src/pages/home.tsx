@@ -24,47 +24,48 @@ import { TiltCard } from "@/components/effects/tilt-card"
 import { getFeaturedPosts } from "@/data/posts"
 
 const TECH_STACK = [
-  "Python", "Java", "JavaScript", "TypeScript",
-  "LLM", "RAG", "知识图谱", "多智能体",
-  "Prompt 工程", "Web Audio", "进程隔离", "白盒推理",
+  "Python", "Java", "Go", "TypeScript",
+  "LLM", "RAG", "本地知识库", "知识图谱",
+  "多智能体", "进程隔离", "运维 Agent", "Web Audio",
+  "桌面工具", "Prompt 工程", "白盒推理",
 ]
 
 const TIMELINE = [
   {
-    date: "2026-07-31",
-    title: "MoLock 更新",
-    desc: "墨家「经说双链」语义约束推理架构持续迭代",
-    repo: "MoLock",
+    date: "2026-10-20",
+    title: "盘枢 Panhub 开源",
+    desc: "纯本地、可离线、可审计的目录级 RAG 中台，单文件 exe 交付",
+    repo: "plankernel",
   },
   {
-    date: "2026-07-25",
-    title: "CBSS 开源",
-    desc: "Java 新项目发布",
-    repo: "CBSS",
-  },
-  {
-    date: "2026-07-20",
-    title: "TJ 与 Auralis",
-    desc: "CKG 白盒推理引擎与双耳听觉校准室同步推进",
-    repo: "TJ / Auralis",
-  },
-  {
-    date: "2026-07-16",
-    title: "DPB-WS 发布",
-    desc: "专注 Agent 处理问题的规范",
-    repo: "DPB-WS",
-  },
-  {
-    date: "2026-06-21",
-    title: "BeeHive 更新",
-    desc: "多智能体协作与责任规范完善",
-    repo: "BeeHive",
-  },
-  {
-    date: "2026-06-03",
-    title: "AntNest 开源",
-    desc: "蚁后/工蚁架构的 AI 编程助手",
+    date: "2026-10-14",
+    title: "AntNest 迭代至 40 Star",
+    desc: "蚁后 / 工蚁架构持续完善，隔离执行链路更加稳定",
     repo: "AntNest",
+  },
+  {
+    date: "2026-09-08",
+    title: "codeposter 与微服务面板",
+    desc: "代码分享图工具与 Windows 微服务管理面板同日上线",
+    repo: "codeposter / microservice-manager",
+  },
+  {
+    date: "2026-09-02",
+    title: "AgentBook 发布",
+    desc: "用自然语言控制 Linux 的运维 Agent，自带工具白名单与命令护栏",
+    repo: "AgentBook",
+  },
+  {
+    date: "2026-08-21",
+    title: "AI 面试宝典",
+    desc: "18,095 道 Java 后端面试题，支持随机刷题与进度追踪",
+    repo: "ai-interview",
+  },
+  {
+    date: "2026-08-09",
+    title: "MoLock 与 BeeHive 更新",
+    desc: "中文语义约束推理与多智能体协作规范同步推进",
+    repo: "MoLock / BeeHive",
   },
 ]
 
@@ -130,7 +131,7 @@ export function HomePage() {
         >
           个人开发者 · AI Agent 研究者
           <br className="sm:hidden" />
-          中文大模型语义推理 · 多智能体架构 · 白盒引擎
+          中文语义推理 · 本地 RAG · 运维 Agent · 白盒引擎
           <motion.span
             aria-hidden
             animate={{ opacity: [1, 0, 1] }}

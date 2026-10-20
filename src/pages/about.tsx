@@ -38,8 +38,8 @@ const PHILOSOPHY = [
   },
   {
     icon: Layers,
-    title: "让过程有规范",
-    desc: "DPB-WS 把工程师的方法论编译成 Agent 的流程规范，让输出从灵光一现变成工程成果。",
+    title: "让知识留在本地",
+    desc: "盘枢 Panhub 把 RAG 绑定到目录本身：索引可迁移、完整性可自证、原始文档不出机——知识的主权属于使用者。",
   },
 ]
 
@@ -48,7 +48,9 @@ const FOCUS = [
   "多智能体协作架构",
   "Agent 安全与进程隔离",
   "白盒推理引擎与知识图谱",
-  "Prompt 工程与技能编排",
+  "本地优先 RAG 与桌面工具",
+  "Linux 运维 Agent",
+  "微服务与开发效率工具",
   "Web 音频与创意工具",
 ]
 
@@ -57,6 +59,7 @@ const PRINCIPLES = [
   "蚁后思考，工蚁执行 —— 职责分离是安全的基石",
   "经说双链 —— 语义约束比语义劝说更可靠",
   "白盒优先 —— 不可解释的推理不该用于高风险场景",
+  "目录即工作区 —— 数据主权优先于云端便利",
 ]
 
 export function AboutPage() {
@@ -111,8 +114,9 @@ export function AboutPage() {
               <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
                 偏爱用代码描绘不循常理的妄想：
                 让 AI 用中文推理不跑偏的语义约束架构、蚁后/工蚁分离的 Agent
-                安全模型、摊开在知识图谱上的白盒推理引擎。
-                相信架构即安全、语义即约束、流程即工程。
+                安全模型、摊开在知识图谱上的白盒推理引擎，以及不出机的本地 RAG
+                和能听懂人话的运维 Agent。
+                相信架构即安全、语义即约束、数据主权即自由。
               </p>
               <p className="mt-3 font-mono text-xs text-muted-foreground/70">
                 <span className="font-display font-semibold text-primary/80">LLXPY</span>
@@ -197,7 +201,7 @@ export function AboutPage() {
             <div className="flex items-center gap-3">
               <Compass className="h-5 w-5 text-primary" />
               <h2 className="font-display text-2xl font-bold tracking-tight">
-                四条原则
+                五条原则
               </h2>
             </div>
             <div className="mt-8 space-y-4">
