@@ -7,6 +7,9 @@ import { Stagger, StaggerItem, Reveal } from "@/components/motion"
 import { TiltCard } from "@/components/effects/tilt-card"
 
 export function BlogPage() {
+  const posts = [...POSTS].sort((a, b) => b.date.localeCompare(a.date))
+  const featured = posts[0]
+
   return (
     <div className="relative mx-auto max-w-6xl px-6 pb-28 pt-32">
       <Reveal>
@@ -17,37 +20,37 @@ export function BlogPage() {
           文章<span className="text-primary">.</span>
         </h1>
         <p className="mt-4 max-w-xl text-muted-foreground">
-          关于 AI Agent、中文大模型推理与工程实践的思考笔记。
+          关于 AI Agent、本地 RAG、中文大模型推理与工程实践的技术笔记。
         </p>
       </Reveal>
 
       {/* 精选大卡片 */}
-      {POSTS.find((p) => p.featured) && (
+      {featured && (
         <Reveal delay={0.1}>
-          <Link to={`/blog/${POSTS[0].slug}`} className="group mt-12 block">
+          <Link to={`/blog/${featured.slug}`} className="group mt-12 block">
             <TiltCard max={4}>
               <Card className="glow-border relative overflow-hidden">
               <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl transition-all duration-700 group-hover:bg-primary/20" />
               <CardContent className="relative flex flex-col gap-5 p-8 sm:p-10">
                 <div className="flex items-center gap-3">
-                  <Badge variant="glow">置顶 · {POSTS[0].project}</Badge>
+                  <Badge variant="glow">置顶 · {featured.project}</Badge>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Calendar className="h-3.5 w-3.5" />
-                    {new Date(POSTS[0].date).toLocaleDateString("zh-CN")}
+                    {new Date(featured.date).toLocaleDateString("zh-CN")}
                   </span>
                   <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <Clock className="h-3.5 w-3.5" />
-                    {POSTS[0].readingTime} 分钟
+                    {featured.readingTime} 分钟
                   </span>
                 </div>
                 <h2 className="font-display max-w-2xl text-2xl font-bold leading-snug tracking-tight transition-colors group-hover:text-primary sm:text-3xl">
-                  {POSTS[0].title}
+                  {featured.title}
                 </h2>
                 <p className="max-w-2xl leading-relaxed text-muted-foreground">
-                  {POSTS[0].excerpt}
+                  {featured.excerpt}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {POSTS[0].tags.map((tag) => (
+                  {featured.tags.map((tag) => (
                     <Badge key={tag} variant="outline">
                       {tag}
                     </Badge>
@@ -66,7 +69,7 @@ export function BlogPage() {
 
       {/* 文章列表 */}
       <Stagger className="mt-14 grid gap-6 md:grid-cols-2">
-        {POSTS.slice(1).map((post, i) => (
+        {posts.slice(1).map((post, i) => (
           <StaggerItem key={post.slug} delay={i * 0.09}>
             <Link to={`/blog/${post.slug}`} className="group block h-full">
               <TiltCard max={5} className="h-full">
