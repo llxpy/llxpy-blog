@@ -25,7 +25,7 @@ export interface Note {
   }[]
 }
 
-/** 笔记分类：覆盖黑马程序员课程主线（语言 / Java / 前端 / SQL / 大模型） */
+/** 笔记分类：覆盖程序员课程主线（语言 / Java / 前端 / SQL / 大模型） */
 export const NOTE_CATEGORIES: NoteCategory[] = [
   { id: "language", label: "语言", desc: "Python · uv · 编程语言从基础到 Web 开发" },
   { id: "java", label: "Java", desc: "基础→JDBC · 工程化 · Spring Boot · MyBatis · API · 阿里云" },
