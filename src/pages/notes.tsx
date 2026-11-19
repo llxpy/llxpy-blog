@@ -40,7 +40,7 @@ export function NotesPage() {
           笔记<span className="text-primary">.</span>
         </h1>
         <p className="mt-4 max-w-xl text-muted-foreground">
-          学习路线上的沉淀：黑马程序员课程笔记与技术知识总结，按分类整理，持续更新。
+          学习路线上的沉淀：程序员笔记与技术知识总结，按分类整理，持续更新。
         </p>
       </Reveal>
 
